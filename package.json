@@ -1,0 +1,13 @@
+{
+	name: 'Simple Express App',
+	version: '0.1',
+	description: 'This is a simple Node app written using ExpressJS.',
+
+	contributors: [
+		{'name': 'Thabang Tseboho'}
+	]
+
+	dependencies: {
+		'restify': '~4.12.2',
+	}
+}
