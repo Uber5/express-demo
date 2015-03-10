@@ -5,7 +5,7 @@
 
 	contributors: [
 		{'name': 'Thabang Tseboho'}
-	]
+	],
 
 	dependencies: {
 		'restify': '~4.12.2',
