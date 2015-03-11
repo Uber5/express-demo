@@ -1,13 +1,14 @@
 {
-	name: 'Simple Express App',
-	version: '0.1',
-	description: 'This is a simple Node app written using ExpressJS.',
-
-	contributors: [
-		{'name': 'Thabang Tseboho'}
-	],
-
-	dependencies: {
-		'restify': '~4.12.2',
-	}
+  "name": "Simple-Express-App",
+  "version": "1.0.0",
+  "description": "This is a simple Node app written using ExpressJS.",
+  "contributors": [
+    {
+      "name": "Thabang Tseboho"
+    }
+  ],
+  "dependencies": {
+    "restify": "~4.12.2",
+    "body-parser": "~1.12.0"
+  }
 }
