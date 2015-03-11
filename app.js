@@ -7,6 +7,16 @@ app.get('/', function (req, res) {
   res.send('Hello World! I\'m an Express Server!');
 });
 
+// Middleware
+// TODO: Thabang: Find out reason for 'extended: true/false' option.
+app.use(bodyParser.json({
+	extended: true,	
+}));
+
+app.use(bodyParser.urlencoded({
+	extended: true,
+}));
+
 // TODO: Thabang: Define Profile API.
 app.get('/api/profiles/', function(req, res){
 	// Get all UserProfiles.
@@ -16,8 +26,8 @@ app.get('/api/profiles/', function(req, res){
 app.post('/api/profiles/', function(req, res){
 	// Create New Profile.
 	// Perfom data clean.
-	console.log(req);
-	res.send('Created some users here! NOT!');
+	profiles.push(req.body);
+	res.send(profiles);
 });
 
 // app.put('api/profiles/', function(req, res){
