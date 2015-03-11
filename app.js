@@ -7,12 +7,13 @@ app.get('/', function (req, res) {
 });
 
 // TODO: Thabang: Define Profile API.
-app.get('api/profiles/', function(req, res){
+app.get('/api/profiles/', function(req, res){
 	// Get all UserProfiles.
+	console.log('Inside GET.');
 	res.send('Some users here!');
 });
 
-app.post('api/profiles/', function(req, res){
+app.post('/api/profiles/', function(req, res){
 	// Create New Profile.
 	// Perfom data clean.
 });
