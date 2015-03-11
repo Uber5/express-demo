@@ -1,4 +1,4 @@
-// Package installs and imports.
+// Dependencies.
 var express = require('express');
 var app = express();
 
@@ -7,29 +7,28 @@ app.get('/', function (req, res) {
 });
 
 // TODO: Thabang: Define Profile API.
-app.get('api/profiles/' function(req, res){
+app.get('api/profiles/', function(req, res){
 	// Get all UserProfiles.
+	res.send('Some users here!');
 });
 
-app.post('api/profiles/' function(req, res){
+app.post('api/profiles/', function(req, res){
 	// Create New Profile.
 	// Perfom data clean.
 });
 
-app.put('api/profiles/', function(req, res){
-	// Update profile using email as identifier.
-});
+// app.put('api/profiles/', function(req, res){
+// 	// Update profile using email as identifier.
+// });
 
-app.delete('api/profiles/', function(req, res){
-
-});
+// app.delete('api/profiles/', function(req, res){
+// 	// Delete profile using email as identifier.
+// });
 
 // TODO: Thabang: Move into seperate json file.
 // TODO: LATER: Save to db.
 // Dummy Database.
-var profiles: [
-
-]
+var profiles = []
 
 // Server Definition.
 var server = app.listen(3000, function () {
