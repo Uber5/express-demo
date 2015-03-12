@@ -19,9 +19,9 @@ app.get('/', function (req, res) {
 });
 
 // TODO: Thabang: Define Profile API.
-app.get('/api/profiles', function(req, res){
+app.get('/api/profiles/:id', function(req, res){
 	// Get all UserProfiles.
-	res.send('Some users here!');
+	res.send('User: ' + req.params.id);
 });
 
 app.post('/api/profiles', function(req, res){
