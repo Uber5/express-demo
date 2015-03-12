@@ -18,23 +18,23 @@ app.use(bodyParser.urlencoded({
 }));
 
 // TODO: Thabang: Define Profile API.
-app.get('/api/profiles/', function(req, res){
+app.get('/api/profiles', function(req, res){
 	// Get all UserProfiles.
 	res.send('Some users here!');
 });
 
-app.post('/api/profiles/', function(req, res){
+app.post('/api/profiles', function(req, res){
 	// Create New Profile.
 	// Perfom data clean.
 	profiles.push(req.body);
-	res.send(profiles);
+	res.send("Added new ");
 });
 
-// app.put('api/profiles/', function(req, res){
+// app.put('api/profiles', function(req, res){
 // 	// Update profile using email as identifier.
 // });
 
-// app.delete('api/profiles/', function(req, res){
+// app.delete('api/profiles', function(req, res){
 // 	// Delete profile using email as identifier.
 // });
 
