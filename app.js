@@ -20,15 +20,19 @@ app.get('/', function (req, res) {
 
 // TODO: Thabang: Define Profile API.
 app.get('/api/profiles/:id', function(req, res){
-	// Get all UserProfiles.
-	res.send('User: ' + req.params.id);
+	// Get single or all UserProfiles.
+	// TODO: Thabang: Create query function.
+	if (req.params.id == 'all') {
+		res.status(201).send("Status: " + res.statusCode + "Here are all the users.");
+	} else {
+		res.status(201).send("Status: " + res.statusCode + ' User: ' + req.params.id);
+	}
 });
 
 app.post('/api/profiles', function(req, res){
-	// Create New Profile.
 	// Perfom data clean.
-	profiles.push(req.body);
-	res.send("Added new user.");
+	// Create New Profile and respond accordingly.
+	res.status(201).send("Status: " + res.statusCode + " Added new user.");
 });
 
 // app.put('api/profiles', function(req, res){
