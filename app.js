@@ -1,13 +1,9 @@
-// Dependencies.
+// DEPENDENCIES
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-app.get('/', function (req, res) {
-  res.send('Hello World! I\'m an Express Server!');
-});
-
-// Middleware
+// MIDDLEWARE
 // TODO: Thabang: Find out reason for 'extended: true/false' option.
 app.use(bodyParser.json({
 	extended: true,	
@@ -16,6 +12,11 @@ app.use(bodyParser.json({
 app.use(bodyParser.urlencoded({
 	extended: true,
 }));
+
+// ROUTES
+app.get('/', function (req, res) {
+  res.send('Hello World! I\'m an Express Server!');
+});
 
 // TODO: Thabang: Define Profile API.
 app.get('/api/profiles', function(req, res){
@@ -27,7 +28,7 @@ app.post('/api/profiles', function(req, res){
 	// Create New Profile.
 	// Perfom data clean.
 	profiles.push(req.body);
-	res.send("Added new ");
+	res.send("Added new user.");
 });
 
 // app.put('api/profiles', function(req, res){
@@ -43,8 +44,8 @@ app.post('/api/profiles', function(req, res){
 // Dummy Database.
 var profiles = []
 
-// Server Definition.
-var server = app.listen(3000, function () {
+// SERVER
+var server = app.listen(8000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
