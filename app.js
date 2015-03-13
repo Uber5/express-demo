@@ -99,13 +99,24 @@ app.post('/api/profiles', function(req, res){
 	};
 });
 
-// app.put('api/profiles', function(req, res){
-// 	// Update profile using email as identifier.
-// });
+app.put('api/profiles', function(req, res){
+	// Update profile using email as identifier.
+});
 
-// app.delete('api/profiles', function(req, res){
-// 	// Delete profile using email as identifier.
-// });
+app.delete('/api/profiles/:id', function(req, res){
+	var id = req.params.id;
+	var profile = findProfileByID(id);
+	if (profile == null){
+		res.status(404).send("Status: " +res.statusCode+ " Profile does not exist!");
+	} else {
+		for (i = 0; i <= profiles.length; i++){
+			if (profiles[i].id == id){
+				profiles.splice(i, 1);
+				res.status(201).send("Status: "+res.statusCode+ " Deleted profile with ID: "+id);
+			};
+		};
+	};
+});
 
 
 // SERVER
