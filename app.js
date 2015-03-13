@@ -46,7 +46,7 @@ app.get('/', function (req, res) {
 });
 
 
-// APIS
+// PROFILES API
 // Find Profile from dummy DB with ID. Returns profile or null.
 // TODO: OPTIONAL: Thabang: Find better exhaustive search method.
 function findProfileByID(id){
@@ -98,11 +98,11 @@ app.post('/api/profiles', function(req, res){
 		res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
 	};
 });
-
+// Profiles PUT
 app.put('api/profiles', function(req, res){
-	// Update profile using email as identifier.
+	// Update profile using ID as identifier and email?!.
 });
-
+// Profiles DELETE
 app.delete('/api/profiles/:id', function(req, res){
 	var id = req.params.id;
 	var profile = findProfileByID(id);
