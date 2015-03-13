@@ -18,43 +18,52 @@ app.get('/', function (req, res) {
 });
 
 // APIS
+function findProfileByID(id){
+	var response = null;
+	profiles.forEach(function(profile){
+		if (profile.id == id) {
+			response = profile;
+		}
+	});
+	return response;
+}
+
+function findProfileByEmail(email){
+	var response = null;
+	profiles.forEach(function(profile){
+		if (profile.email == email) {
+			response = profile;
+		}
+	});
+	return response;
+}
+
 app.get('/api/profiles', function(req, res){
 	res.status(200).send(profiles);
 });
 
 app.get('/api/profiles/:id', function(req, res){
-	profiles.forEach(function(profile){
-		if (profile.id == req.params.id) {
-			res.status(200).send(profile);
-		} else {
+	var response = findProfileByID(req.params.id);
+	
+	if ( response == null ){
 			res.status(404).send("Profile Was not Found!");
+		} else {
+			res.status(200).send(response);
 		};
-	});
 });
 
 app.post('/api/profiles', function(req, res){
 	var profile = req.body;
+	var response = findProfileByEmail(profile.email);
 
-	if (foundProfile() == true) {
-		res.status(200);
-		res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
-	} else {
+	if (response == null) {
 		lastID++;
 		profile.id = lastID;
 		profiles.push(profile);	
 		res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
-	};
-
-	function foundProfile() {
-		var found = null;
-		profiles.forEach(function(value){
-			if (profile.email == value.email){
-				found = true;
-			} else {
-				found = null;
-			}
-		});
-		return found;
+	} else {
+		res.status(200);
+		res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
 	};
 });
 
