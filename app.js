@@ -34,22 +34,31 @@ app.get('/api/profiles/:id', function(req, res){
 
 app.post('/api/profiles', function(req, res){
 	var profile = req.body;
-	var profileFound = null;
-	
-	profiles.forEach(function(value){
-		if (value.email == profile.email){
-			res.status(200).send("Profile with email: " +profile.email+ " already exists!");
-		} else {
-			createProfile()
-		}
-	})
-	
+
+	function foundProfile() {
+		var found = null;
+		profiles.forEach(function(value){
+			if (profile.email == value.email){
+				found = true;
+			} else {
+				found = null;
+			}
+		});
+		return found;
+	};
+
 	function createProfile(){
 		lastID++;
 		profile.id = lastID;
 		profiles.push(profile);	
+		res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
 	};
-	res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
+
+	if (foundProfile() == true) {
+		res.status(200).send("Profile with email: " + profile.email + " already exists!");
+	} else {
+		createProfile();
+	};
 });
 
 // app.put('api/profiles', function(req, res){
