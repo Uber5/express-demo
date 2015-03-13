@@ -2,7 +2,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-
 app.set('view engine', 'ejs');
 
 // MIDDLEWARE
@@ -19,22 +18,38 @@ app.get('/', function (req, res) {
 });
 
 // APIS
-// TODO: Thabang: Define Profile API.
+app.get('/api/profiles', function(req, res){
+	res.status(200).send(profiles);
+});
+
 app.get('/api/profiles/:id', function(req, res){
-	// Get single or all UserProfiles.
-	// TODO: Thabang: Create query function.
-	if (req.params.id == 'all') {
-		res.status(201).send("Status: " + res.statusCode + "Here are all the users.");
-	} else {
-		res.status(201).send("Status: " + res.statusCode + ' User: ' + req.params.id);
-	}
+	profiles.forEach(function(profile){
+		if (profile.id == req.params.id) {
+			res.status(200).send(profile);
+		} else {
+			res.status(404).send("Profile Was not Found!");
+		};
+	});
 });
 
 app.post('/api/profiles', function(req, res){
-	// Perfom data clean.
-	// Create New Profile and respond accordingly.
-	console.log(req.body);
-	res.status(201).send("Status: " + res.statusCode + " Added new user.");
+	var profile = req.body;
+	var profileFound = null;
+	
+	profiles.forEach(function(value){
+		if (value.email == profile.email){
+			res.status(200).send("Profile with email: " +profile.email+ " already exists!");
+		} else {
+			createProfile()
+		}
+	})
+	
+	function createProfile(){
+		lastID++;
+		profile.id = lastID;
+		profiles.push(profile);	
+	};
+	res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
 });
 
 // app.put('api/profiles', function(req, res){
@@ -45,13 +60,30 @@ app.post('/api/profiles', function(req, res){
 // 	// Delete profile using email as identifier.
 // });
 
-// TODO: Thabang: Move into seperate json file.
-// TODO: LATER: Save to db.
 // Dummy Database.
-var profiles = []
+var profiles = [];
+var lastID = 0;
+
+var fixtures = [
+	{
+		"first_name": "Thabang",
+		"last_name": "Tseboho",
+		"email": "thabang@thabang.io"
+	},
+	{
+		"first_name": "Dude",
+		"last_name": "Guy",
+		"email": "dude@guy.io"
+	}
+];
+
+fixtures.forEach(function(value){
+	lastID++;
+	value.id = lastID;
+	profiles.push(value);
+});
 
 // SERVER
-
 
 var server = app.listen(8000, function () {
 
