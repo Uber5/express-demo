@@ -3,21 +3,22 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+app.set('view engine', 'ejs');
+
 // MIDDLEWARE
 // TODO: Thabang: Find out reason for 'extended: true/false' option.
-app.use(bodyParser.json({
-	extended: true,	
-}));
+app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
 	extended: true,
 }));
 
-// ROUTES
+// VIEWS
 app.get('/', function (req, res) {
-  res.send('Hello World! I\'m an Express Server!');
+  res.render('pages/index', {title: "Hi there, I'm an Express Server! Enter your details below."});
 });
 
+// APIS
 // TODO: Thabang: Define Profile API.
 app.get('/api/profiles/:id', function(req, res){
 	// Get single or all UserProfiles.
@@ -32,6 +33,7 @@ app.get('/api/profiles/:id', function(req, res){
 app.post('/api/profiles', function(req, res){
 	// Perfom data clean.
 	// Create New Profile and respond accordingly.
+	console.log(req.body);
 	res.status(201).send("Status: " + res.statusCode + " Added new user.");
 });
 
@@ -49,6 +51,8 @@ app.post('/api/profiles', function(req, res){
 var profiles = []
 
 // SERVER
+
+
 var server = app.listen(8000, function () {
 
   var host = server.address().address;
