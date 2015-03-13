@@ -35,6 +35,16 @@ app.get('/api/profiles/:id', function(req, res){
 app.post('/api/profiles', function(req, res){
 	var profile = req.body;
 
+	if (foundProfile() == true) {
+		res.status(200);
+		res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
+	} else {
+		lastID++;
+		profile.id = lastID;
+		profiles.push(profile);	
+		res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
+	};
+
 	function foundProfile() {
 		var found = null;
 		profiles.forEach(function(value){
@@ -45,19 +55,6 @@ app.post('/api/profiles', function(req, res){
 			}
 		});
 		return found;
-	};
-
-	function createProfile(){
-		lastID++;
-		profile.id = lastID;
-		profiles.push(profile);	
-		res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
-	};
-
-	if (foundProfile() == true) {
-		res.status(200).send("Profile with email: " + profile.email + " already exists!");
-	} else {
-		createProfile();
 	};
 });
 
