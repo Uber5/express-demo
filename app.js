@@ -68,6 +68,11 @@ function findProfileByEmail(email){
 	});
 	return response;
 }
+
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 // Profiles GET ALL
 app.get('/api/profiles', function(req, res){
 	res.status(200).send(profiles);
@@ -85,17 +90,22 @@ app.get('/api/profiles/:id', function(req, res){
 // Profiles POST
 app.post('/api/profiles', function(req, res){
 	var profile = req.body;
-	var response = findProfileByEmail(profile.email);
 
-	if (response == null) {
-		var now = new Date().toJSON();
-		lastID++;
-		profile.id = lastID;
-		profiles.push(profile);	
-		res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
+	if (validateEmail(profile.email)) {
+		var response = findProfileByEmail(profile.email);
+		
+		if (response == null) {
+			var now = new Date().toJSON();
+			lastID++;
+			profile.id = lastID;
+			profiles.push(profile);	
+			res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
+		} else {
+			res.status(200);
+			res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
+		};	
 	} else {
-		res.status(200);
-		res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
+		res.status(200).send("Status: " + res.statusCode + " Please Enter a valid Email address.")
 	};
 });
 // Profiles PUT
