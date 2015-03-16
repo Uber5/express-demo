@@ -73,6 +73,15 @@ function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+function validateFirstLastName(first, last){
+	if (first.length>0 && last.length>0){
+		return true;
+	} else {
+		return false;
+	};
+};
+
 // Profiles GET ALL
 app.get('/api/profiles', function(req, res){
 	res.status(200).send(profiles);
@@ -90,8 +99,10 @@ app.get('/api/profiles/:id', function(req, res){
 // Profiles POST
 app.post('/api/profiles', function(req, res){
 	var profile = req.body;
+	var namesValid = validateFirstLastName(profile.first_name, profile.last_name);
+	var emailvalid = validateEmail(profile.email);
 
-	if (validateEmail(profile.email)) {
+	if (emailvalid && emailvalid) {
 		var response = findProfileByEmail(profile.email);
 		
 		if (response == null) {
@@ -112,8 +123,9 @@ app.post('/api/profiles', function(req, res){
 app.put('/api/profiles', function(req, res){
 	var profile_update = req.body;
 	var profile = findProfileByEmail(profile_update.email);
+	var namesValid = validateFirstLastName(profile_update.first_name, profile_update.last_name)
 
-	if (profile != null){
+	if (profile && namesValid){
 		for (i = 0; i <= profiles.length; i++){
 			if (profiles[i].id == profile.id){
 				profile_update.id = profile.id;
