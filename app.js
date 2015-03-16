@@ -99,40 +99,43 @@ app.post('/api/profiles', function(req, res){
 			lastID++;
 			profile.id = lastID;
 			profiles.push(profile);
-			res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
+			res.status(201).send("Status: " + res.statusCode + ", Added new user with id " + profile.id);
 		} else {
 			res.status(200);
-			res.send("Status: " +res.statusCode+ " Profile with email: " + profile.email + " already exists!");
+			res.send("Status: " +res.statusCode+ ", Profile with email: " + profile.email + " already exists!");
 		};	
 	} else {
-		res.status(200).send("Status: " + res.statusCode + " Please Enter a valid Email address.")
+		res.status(200).send("Status: " + res.statusCode + ", Please Enter a valid Email address.")
 	};
 });
 // Profiles PUT
 app.put('/api/profiles', function(req, res){
-	if (validateEmail(profile.email)){
-		var profile = findProfileByEmail(req.body.email);
+	var profile_update = req.body;
+	var profile = findProfileByEmail(profile_update.email);
+
+	if (profile != null){
 		for (i = 0; i <= profiles.length; i++){
 			if (profiles[i].id == profile.id){
-				profiles[i] = req.body;
-				res.status(201).send("Status: "+res.statusCode+ " Updated profile with ID: "+id);
+				profile_update.id = profile.id;
+				profiles[i] = profile_update;
+				res.status(201).send("Status: "+res.statusCode+ ", Updated profile with ID: "+profile.id);
 			};
-		}
+		};
 	} else {
-		res.status(200).send("Status: "+res.statusCode+" Could not update profile!");
-	}
+		res.status(200).send("Status: "+res.statusCode+", Could not update profile!");
+	};
 });
 // Profiles DELETE
 app.delete('/api/profiles/:id', function(req, res){
 	var id = req.params.id;
 	var profile = findProfileByID(id);
 	if (profile == null){
-		res.status(404).send("Status: " +res.statusCode+ " Profile does not exist!");
+		res.status(404).send("Status: " +res.statusCode+ ", Profile does not exist!");
 	} else {
 		for (i = 0; i <= profiles.length; i++){
 			if (profiles[i].id == id){
 				profiles.splice(i, 1);
-				res.status(201).send("Status: "+res.statusCode+ " Deleted profile with ID: "+id);
+				res.status(201).send("Status: "+res.statusCode+ ", Deleted profile with ID: "+id);
 			};
 		};
 	};
