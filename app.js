@@ -98,7 +98,7 @@ app.post('/api/profiles', function(req, res){
 			var now = new Date().toJSON();
 			lastID++;
 			profile.id = lastID;
-			profiles.push(profile);	
+			profiles.push(profile);
 			res.status(201).send("Status: " + res.statusCode + " Added new user with id " + profile.id);
 		} else {
 			res.status(200);
@@ -109,8 +109,18 @@ app.post('/api/profiles', function(req, res){
 	};
 });
 // Profiles PUT
-app.put('api/profiles', function(req, res){
-	// Update profile using ID as identifier and email?!.
+app.put('/api/profiles', function(req, res){
+	if (validateEmail(profile.email)){
+		var profile = findProfileByEmail(req.body.email);
+		for (i = 0; i <= profiles.length; i++){
+			if (profiles[i].id == profile.id){
+				profiles[i] = req.body;
+				res.status(201).send("Status: "+res.statusCode+ " Updated profile with ID: "+id);
+			};
+		}
+	} else {
+		res.status(200).send("Status: "+res.statusCode+" Could not update profile!");
+	}
 });
 // Profiles DELETE
 app.delete('/api/profiles/:id', function(req, res){
