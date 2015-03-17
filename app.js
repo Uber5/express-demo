@@ -130,7 +130,7 @@ app.post('/api/profiles', function(req, res){
 			res.status(201).send("Status: " + res.statusCode + ", Added new user with id " + profile.id);
 		} else {
 			res.status(400);
-			res.send("Status: " + res.statusCode + ", Profile with email: " + profile.email + " already exists.");
+			res.send("Status: " + res.statusCode + ", Profile with email: " + body.email + " already exists.");
 		};	
 	} else {
 		res.status(400).send("input validation failed");
@@ -184,17 +184,13 @@ app.put('/api/profiles/:id', function(req, res){
 // Profiles DELETE
 app.delete('/api/profiles/:id', function(req, res){
 	var id = req.params.id;
-	var profile = findProfileByID(id);
-	if (profile == null){
-		res.status(404).send("Status: " +res.statusCode+ ", Profile does not exist!");
-	} else {
-		for (i = 0; i <= profiles.length; i++){
-			if (profiles[i].id == id){
-				profiles.splice(i, 1);
-				res.status(201).send("Status: "+res.statusCode+ ", Deleted profile with ID: "+id);
-			};
-		};
-	};
+  for (i = 0; i < profiles.length; i++) {
+    if (profiles[i].id == id){
+      profiles.splice(i, 1);
+      return res.status(200).send("Status: "+res.statusCode+ ", Deleted profile with ID: "+id);
+    };
+  };
+  res.status(404).send("Status: " +res.statusCode+ ", Profile does not exist!");
 });
 
 
