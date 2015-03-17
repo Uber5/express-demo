@@ -2,6 +2,7 @@
   "name": "Simple-Express-App",
   "version": "1.0.0",
   "description": "This is a simple Node app written using ExpressJS.",
+  "main": "app.js",
   "contributors": [
     {
       "name": "Christopher Ollof"
@@ -10,6 +11,9 @@
       "name": "Thabang Tseboho"
     }
   ],
+  "engines": {
+  	"node": "~0.10.25"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/uber5/express-demo"
