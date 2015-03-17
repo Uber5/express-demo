@@ -137,26 +137,40 @@ app.post('/api/profiles', function(req, res){
 	};
 });
 
-app.put('/api/profiles/:id', function(req, res){
-	var profile_update = req.body;
-	var profile = findProfileByID(req.params.id);
+function determinePutProperties(body) {
 
   var updateableProperties = [
     'first_name', 'last_name', 'email'
   ];
 
+  var providedProperties = [];
+  for (var property in body) {
+    if (updateableProperties.indexOf(property) > -1) {
+      providedProperties.push(property);
+    }
+  }
+
+  return providedProperties;
+}
+
+app.put('/api/profiles/:id', function(req, res){
+	var profileUpdate = req.body;
+	var profile = findProfileByID(req.params.id);
+
+  var providedProperties = determinePutProperties(profileUpdate);
+
 	if (profile) {
     var areAllUpdatesValid = true;
-    updateableProperties.forEach(function(property) {
+    providedProperties.forEach(function(property) {
       var validator = validators[property];
-      var isValid = validator(profile_update[property]);
+      var isValid = validator(profileUpdate[property]);
       if (!isValid) {
         areAllUpdatesValid = false;
       }
     });
     if (areAllUpdatesValid) {
-      updateableProperties.forEach(function(property) {
-        profile[property] = profile_update[property];
+      providedProperties.forEach(function(property) {
+        profile[property] = profileUpdate[property];
       });
       res.status(200).send("Status: "+res.statusCode+ ", Updated profile with ID: "+profile.id);
     } else {
