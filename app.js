@@ -133,6 +133,7 @@ app.post('/api/profiles', function(req, res){
 			res.send("Status: " + res.statusCode + ", Profile with email: " + body.email + " already exists.");
 		};	
 	} else {
+		console.log("Input validation failed. Body: ", body);
 		res.status(400).send("input validation failed");
 	};
 });
