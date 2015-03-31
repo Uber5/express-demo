@@ -184,6 +184,7 @@ app.put('/api/profiles/:id', function(req, res){
 
 // Profiles DELETE
 app.delete('/api/profiles/:id', function(req, res){
+	console.log(req.params);
 	var id = req.params.id;
   for (i = 0; i < profiles.length; i++) {
     if (profiles[i].id == id){
